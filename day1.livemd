@@ -1,0 +1,39 @@
+# Adventcode 2021 - Day 1
+
+## Setup
+
+```elixir
+Mix.install([
+  {:kino, "~> 0.4.0"}
+])
+```
+
+```elixir
+input = Kino.Input.textarea("Day1 input data?")
+```
+
+## Solution
+
+```elixir
+defmodule Day1 do
+  def verify_increase([next | tail]) do
+    verify_increase(tail, next, 0)
+  end
+
+  def verify_increase([left | tail], next, acc) when next < left do
+    verify_increase(tail, left, acc + 1)
+  end
+
+  def verify_increase([left | tail], _next, acc) do
+    verify_increase(tail, left, acc)
+  end
+
+  def verify_increase([], _left, acc), do: IO.puts("Total #{acc}")
+end
+
+input
+|> Kino.Input.read()
+|> String.splitter("\n", trim: true)
+|> Enum.map(&String.to_integer/1)
+|> Day1.verify_increase()
+```

@@ -1,0 +1,33 @@
+# Day2
+
+## Setup
+
+```elixir
+Mix.install([
+  {:kino, "~> 0.4.1"}
+])
+```
+
+```elixir
+input = Kino.Input.textarea("Day2 input?")
+```
+
+```elixir
+defmodule Day2 do
+  def normalize_instruction([instruction, distance]) do
+    {String.to_existing_atom(instruction), String.to_integer(distance)}
+  end
+
+  def normalize_instruction(instruction) do
+    instruction
+    |> String.split(" ")
+    |> normalize_instruction()
+  end
+end
+
+input
+|> Kino.Input.read()
+|> String.splitter("\n")
+|> Enum.map(&Day2.normalize_instruction/1)
+|> Enum.to_list()
+```

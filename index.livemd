@@ -1,3 +1,4 @@
+<!-- vim: set syntax=markdown: -->
 # solutions for advent code 2021
 
 ## Section

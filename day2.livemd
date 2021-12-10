@@ -1,5 +1,3 @@
-<!-- vim: set syntax=markdown: -->
-
 # Day2
 
 ## Setup
@@ -9,6 +7,8 @@ Mix.install([
   {:kino, "~> 0.4.1"}
 ])
 ```
+
+## Day2 - Part1
 
 ```elixir
 input =
@@ -35,11 +35,29 @@ defmodule Day2 do
     |> String.split(" ")
     |> normalize_instruction()
   end
+
+  def move_position({:forward, distance}, %{horizontal: horizontal} = acc) do
+    Map.put(acc, :horizontal, horizontal + distance)
+  end
+
+  def move_position({:down, distance}, %{depth: depth} = acc) do
+    Map.put(acc, :depth, depth + distance)
+  end
+
+  def move_position({:up, distance}, %{depth: depth} = acc) do
+    Map.put(acc, :depth, depth - distance)
+  end
+
+  def result(%{depth: depth, horizontal: horizontal}) do
+    IO.puts("Depth: #{depth} Horizontal: #{horizontal} -> #{depth * horizontal}")
+  end
 end
 
 input
 |> Kino.Input.read()
 |> String.splitter("\n", trim: true)
 |> Enum.map(&Day2.normalize_instruction/1)
-|> Enum.to_list()
+|> Enum.map(&IO.inspect/1)
+|> Enum.reduce(%{horizontal: 0, depth: 0}, &Day2.move_position/2)
+|> Day2.result()
 ```

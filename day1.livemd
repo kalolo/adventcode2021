@@ -1,4 +1,5 @@
 <!-- vim: set syntax=markdown: -->
+
 # Adventcode 2021 - Day 1
 
 ## Setup
@@ -9,7 +10,7 @@ Mix.install([
 ])
 ```
 
-## Part 1
+## input
 
 ```elixir
 input =
@@ -45,7 +46,11 @@ defmodule Day1 do
 
   def verify_increase([], _left, acc), do: IO.puts("Total #{acc}")
 end
+```
 
+## Part 1
+
+```elixir
 input
 |> Kino.Input.read()
 |> String.splitter("\n", trim: true)

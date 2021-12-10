@@ -1,4 +1,3 @@
-<!-- vim: set syntax=markdown: -->
 # Day2
 
 ## Setup
@@ -9,7 +8,7 @@ Mix.install([
 ])
 ```
 
-## Day2 - Part1
+## Input
 
 ```elixir
 input =
@@ -24,6 +23,8 @@ input =
     """
   )
 ```
+
+## part 1
 
 ```elixir
 defmodule Day2 do
@@ -60,5 +61,46 @@ input
 |> Enum.map(&Day2.normalize_instruction/1)
 |> Enum.map(&IO.inspect/1)
 |> Enum.reduce(%{horizontal: 0, depth: 0}, &Day2.move_position/2)
+|> Day2.result()
+```
+
+## part 2
+
+```elixir
+defmodule Day2 do
+  def normalize_instruction([instruction, distance]) do
+    {String.to_existing_atom(instruction), String.to_integer(distance)}
+  end
+
+  def normalize_instruction(instruction) do
+    instruction
+    |> String.split(" ")
+    |> normalize_instruction()
+  end
+
+  def move_position({:forward, distance}, %{horizontal: horizontal, depth: depth, aim: aim} = acc) do
+    acc
+    |> Map.put(:horizontal, horizontal + distance)
+    |> Map.put(:depth, depth + aim * distance)
+  end
+
+  def move_position({:down, units}, %{aim: aim} = acc) do
+    Map.put(acc, :aim, aim + units)
+  end
+
+  def move_position({:up, units}, %{aim: aim} = acc) do
+    Map.put(acc, :aim, aim - units)
+  end
+
+  def result(%{depth: depth, horizontal: horizontal, aim: aim}) do
+    IO.puts("Depth: #{depth} Horizontal: #{horizontal} Aim:#{aim} -> #{depth * horizontal}")
+  end
+end
+
+input
+|> Kino.Input.read()
+|> String.splitter("\n", trim: true)
+|> Enum.map(&Day2.normalize_instruction/1)
+|> Enum.reduce(%{horizontal: 0, depth: 0, aim: 0}, &Day2.move_position/2)
 |> Day2.result()
 ```

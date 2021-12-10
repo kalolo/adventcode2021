@@ -61,7 +61,6 @@ input
 |> Kino.Input.read()
 |> String.splitter("\n", trim: true)
 |> Enum.map(&Day2.normalize_instruction/1)
-|> Enum.map(&IO.inspect/1)
 |> Enum.reduce(%{horizontal: 0, depth: 0}, &Day2.move_position/2)
 |> Day2.result()
 ```

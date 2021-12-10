@@ -1,3 +1,4 @@
+<!-- vim: set syntax=markdown: -->
 # Adventcode 2021 - Day 1
 
 ## Setup
